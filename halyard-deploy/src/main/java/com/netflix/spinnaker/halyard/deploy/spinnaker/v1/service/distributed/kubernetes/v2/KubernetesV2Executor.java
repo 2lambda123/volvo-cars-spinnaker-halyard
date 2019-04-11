@@ -277,6 +277,7 @@ public class KubernetesV2Executor {
     manifest = kubernetesV2Utils.prettify(manifest);
     List<String> command = kubernetesV2Utils.kubectlPrefix(account);
     command.add("replace");
+    command.add("--force");
     command.add("-f");
     command.add("-"); // read from stdin
 
