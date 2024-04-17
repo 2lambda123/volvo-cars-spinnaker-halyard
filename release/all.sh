@@ -17,7 +17,7 @@ fi
 for PLATFORM in "${PLATFORMS[@]}"; do
   echo "Building & releasing $PLATFORM..."
   ./release/"$PLATFORM".sh
-  for VERSION in $VERSIONS; do
+  for VERSION in "$VERSIONS"; do
     echo "Releasing $VERSION to $PLATFORM"
     ./release/publish.sh "$VERSION" "$PLATFORM"
   done
