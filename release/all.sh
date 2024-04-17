@@ -10,7 +10,7 @@ VERSIONS=$@
 USAGE="You must supply a list of <versions>, e.g.\n $0 <version1> <version2>"
 
 if [ -z "$VERSIONS" ]; then
-  >&2 echo "$USAGE"
+  echo >&2 "$USAGE"
   exit 1
 fi
 
