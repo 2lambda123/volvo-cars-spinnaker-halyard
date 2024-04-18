@@ -125,7 +125,7 @@ public class OrcaRunner {
       pipeline = getPipeline.get();
       status = pipeline.getStatus();
 
-      while (status.equalsIgnoreCase("running") || status.equalsIgnoreCase("not_started")) {
+      while ("running".equalsIgnoreCase(status) || "not_started".equalsIgnoreCase(status)) {
         logPipelineOutput(pipeline, loggedTasks);
         DaemonTaskHandler.safeSleep(TimeUnit.SECONDS.toMillis(10));
         pipeline = getPipeline.get();
@@ -137,7 +137,7 @@ public class OrcaRunner {
 
     logPipelineOutput(pipeline, loggedTasks);
 
-    if (status.equalsIgnoreCase("terminal")) {
+    if ("terminal".equalsIgnoreCase(status)) {
       Problem problem = findExecutionError(pipeline);
       throw new HalException(problem);
     }
@@ -152,7 +152,7 @@ public class OrcaRunner {
         String fullTaskId = stageName + ": " + taskName;
         String taskStatus = task.getStatus();
         if (!loggedTasks.contains(fullTaskId) &&
-            (taskStatus.equalsIgnoreCase("running") || taskStatus.equalsIgnoreCase("succeeded"))) {
+            ("running".equalsIgnoreCase(taskStatus) || "succeeded".equalsIgnoreCase(taskStatus))) {
           DaemonTaskHandler.message(taskName);
           loggedTasks.add(fullTaskId);
         }

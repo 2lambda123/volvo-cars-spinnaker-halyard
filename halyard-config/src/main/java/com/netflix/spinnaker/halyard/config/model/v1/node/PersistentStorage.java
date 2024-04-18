@@ -47,7 +47,7 @@ public class PersistentStorage extends Node {
     NodeIterator children = NodeIteratorFactory.makeReflectiveIterator(this);
     Node child = children.getNext();
     while (child != null) {
-      if (!child.getNodeName().equals("oracle") && !child.getNodeName().equals("oraclebmcs")) {
+      if (!"oracle".equals(child.getNodeName()) && !"oraclebmcs".equals(child.getNodeName())) {
         nodes.add(child);
       }
       child = children.getNext();

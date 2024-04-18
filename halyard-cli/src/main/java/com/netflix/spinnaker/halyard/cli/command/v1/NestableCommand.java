@@ -141,7 +141,7 @@ public abstract class NestableCommand {
           String prompt = ((ProtectedCommand) this).getPrompt();
           Console console = System.console();
           String input = console.readLine(prompt + " Do you want to continue? (y/N) ");
-          if (!input.equalsIgnoreCase("y")) {
+          if (!"y".equalsIgnoreCase(input)) {
             AnsiUi.raw("Aborted.");
             return;
           }

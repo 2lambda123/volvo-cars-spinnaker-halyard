@@ -120,7 +120,7 @@ public class BillOfMaterials {
           .orElseThrow(() -> new NoKnownArtifact(artifactName))
           .get(obj);
 
-      if (result == null && !artifactName.equals("defaultArtifact")) {
+      if (result == null && !"defaultArtifact".equals(artifactName)) {
         result = getFieldArtifact(clazz, obj, "defaultArtifact");
       }
 
