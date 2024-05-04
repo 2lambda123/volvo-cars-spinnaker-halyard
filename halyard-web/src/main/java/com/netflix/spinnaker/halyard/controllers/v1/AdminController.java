@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
   private final ArtifactService artifactService;
 
-  @RequestMapping(value = "/publishLatest", method = RequestMethod.PUT)
+  @PutMapping(value = "/publishLatest")
   DaemonTask<Halconfig, Void> publishLatest(
       @RequestParam(required = false) String latestSpinnaker,
       @RequestParam(required = false) String latestHalyard,
@@ -52,7 +52,7 @@ public class AdminController {
     return DaemonTaskHandler.submitTask(builder::build, "Update the latest version");
   }
 
-  @RequestMapping(value = "/deprecateVersion", method = RequestMethod.PUT)
+  @PutMapping(value = "/deprecateVersion")
   DaemonTask<Halconfig, Void> deprecateVersion(
       @RequestParam(required = false) String illegalReason,
       @RequestBody Versions.Version version) {
@@ -64,7 +64,7 @@ public class AdminController {
     return DaemonTaskHandler.submitTask(builder::build, "Deprecate version " + version.getVersion());
   }
 
-  @RequestMapping(value = "/publishVersion", method = RequestMethod.PUT)
+  @PutMapping(value = "/publishVersion")
   DaemonTask<Halconfig, Void> publishVersion(
       @RequestBody Versions.Version version) {
     StaticRequestBuilder<Void> builder = new StaticRequestBuilder<>(() -> {
@@ -75,7 +75,7 @@ public class AdminController {
     return DaemonTaskHandler.submitTask(builder::build, "Publish a new version " + version.getVersion());
   }
 
-  @RequestMapping(value = "/publishBom", method = RequestMethod.PUT)
+  @PutMapping(value = "/publishBom")
   DaemonTask<Halconfig, Void> publishBom(
       @RequestParam String bomPath,
       @RequestBody String _ignored) {
@@ -87,7 +87,7 @@ public class AdminController {
     return DaemonTaskHandler.submitTask(builder::build, "Publish a BOM");
   }
 
-  @RequestMapping(value = "/publishProfile/{artifactName:.+}", method = RequestMethod.PUT)
+  @PutMapping(value = "/publishProfile/{artifactName:.+}")
   DaemonTask<Halconfig, Void> publishProfile(
       @RequestParam String bomPath,
       @PathVariable String artifactName,

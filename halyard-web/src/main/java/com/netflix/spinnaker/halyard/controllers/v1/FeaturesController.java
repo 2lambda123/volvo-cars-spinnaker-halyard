@@ -36,7 +36,7 @@ public class FeaturesController {
   private final FeaturesService featuresService;
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, Features> getFeatures(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings) {
     return GenericGetRequest.<Features>builder()
@@ -47,7 +47,7 @@ public class FeaturesController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.PUT)
+  @PutMapping(value = "/")
   DaemonTask<Halconfig, Void> setFeatures(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings,
       @RequestBody Features features) {

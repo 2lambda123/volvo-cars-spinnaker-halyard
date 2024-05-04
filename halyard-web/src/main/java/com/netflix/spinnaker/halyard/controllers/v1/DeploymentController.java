@@ -62,7 +62,7 @@ public class DeploymentController extends DeploymentsGrpc.DeploymentsImplBase{
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
   private final HalconfigParser halconfigParser;
 
-  @RequestMapping(value = "/{deploymentName:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/{deploymentName:.+}")
   DaemonTask<Halconfig, DeploymentConfiguration> deploymentConfiguration(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings) {
     return GenericGetRequest.<DeploymentConfiguration>builder()
@@ -73,7 +73,7 @@ public class DeploymentController extends DeploymentsGrpc.DeploymentsImplBase{
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{deploymentName:.+}", method = RequestMethod.PUT)
+  @PutMapping(value = "/{deploymentName:.+}")
   DaemonTask<Halconfig, Void> deploymentConfiguration(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings,
       @RequestBody DeploymentConfiguration deploymentConfiguration) {
@@ -86,7 +86,7 @@ public class DeploymentController extends DeploymentsGrpc.DeploymentsImplBase{
         .execute(validationSettings, deploymentConfiguration);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, List<DeploymentConfiguration>> deploymentConfigurations(
       @ModelAttribute ValidationSettings validationSettings) {
     return GenericGetRequest.<List<DeploymentConfiguration>>builder()
@@ -97,7 +97,7 @@ public class DeploymentController extends DeploymentsGrpc.DeploymentsImplBase{
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{deploymentName:.+}/generate/", method = RequestMethod.POST)
+  @PostMapping(value = "/{deploymentName:.+}/generate/")
   DaemonTask<Halconfig, String> generateConfig(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings,
       @RequestParam(required = false) List<String> serviceNames) {
@@ -118,7 +118,7 @@ public class DeploymentController extends DeploymentsGrpc.DeploymentsImplBase{
     return DaemonTaskHandler.submitTask(builder::build, "Generate config");
   }
 
-  @RequestMapping(value = "/{deploymentName:.+}/clean/", method = RequestMethod.POST)
+  @PostMapping(value = "/{deploymentName:.+}/clean/")
   DaemonTask<Halconfig, Void> clean(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings) {
     Supplier<Void> buildResponse = () -> {
@@ -135,7 +135,7 @@ public class DeploymentController extends DeploymentsGrpc.DeploymentsImplBase{
     return DaemonTaskHandler.submitTask(builder::build, "Clean Deployment of Spinnaker");
   }
 
-  @RequestMapping(value = "/{deploymentName:.+}/connect/", method = RequestMethod.POST)
+  @PostMapping(value = "/{deploymentName:.+}/connect/")
   DaemonTask<Halconfig, RemoteAction> connect(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings,
       @RequestParam(required = false) List<String> serviceNames) {
@@ -151,7 +151,7 @@ public class DeploymentController extends DeploymentsGrpc.DeploymentsImplBase{
     return DaemonTaskHandler.submitTask(builder::build, "Connect to Spinnaker deployment.");
   }
 
-  @RequestMapping(value = "/{deploymentName:.+}/rollback/", method = RequestMethod.POST)
+  @PostMapping(value = "/{deploymentName:.+}/rollback/")
   DaemonTask<Halconfig, Void> rollback(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings,
       @RequestParam(required = false) List<String> serviceNames,
@@ -175,7 +175,7 @@ public class DeploymentController extends DeploymentsGrpc.DeploymentsImplBase{
         .submitTask(builder::build, "Rollback Spinnaker", TimeUnit.MINUTES.toMillis(30));
   }
 
-  @RequestMapping(value = "/{deploymentName:.+}/prep/", method = RequestMethod.POST)
+  @PostMapping(value = "/{deploymentName:.+}/prep/")
   DaemonTask<Halconfig, RemoteAction> prep(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings,
       @RequestParam(required = false) List<String> serviceNames,
@@ -195,7 +195,7 @@ public class DeploymentController extends DeploymentsGrpc.DeploymentsImplBase{
         .submitTask(builder::build, "Prep deployment", TimeUnit.MINUTES.toMillis(5));
   }
 
-  @RequestMapping(value = "/{deploymentName:.+}/deploy/", method = RequestMethod.POST)
+  @PostMapping(value = "/{deploymentName:.+}/deploy/")
   DaemonTask<Halconfig, RemoteAction> deploy(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings,
       @RequestParam(required = false) List<DeployOption> deployOptions,
@@ -235,7 +235,7 @@ public class DeploymentController extends DeploymentsGrpc.DeploymentsImplBase{
     responseObserver.onCompleted();
   }
 
-  @RequestMapping(value = "/{deploymentName:.+}/collectLogs/", method = RequestMethod.PUT)
+  @PutMapping(value = "/{deploymentName:.+}/collectLogs/")
   DaemonTask<Halconfig, Void> collectLogs(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings,
       @RequestParam(required = false) List<String> serviceNames,
@@ -257,7 +257,7 @@ public class DeploymentController extends DeploymentsGrpc.DeploymentsImplBase{
     return DaemonTaskHandler.submitTask(builder::build, "Collecting service logs");
   }
 
-  @RequestMapping(value = "/{deploymentName:.+}/configDiff/", method = RequestMethod.GET)
+  @GetMapping(value = "/{deploymentName:.+}/configDiff/")
   DaemonTask<Halconfig, NodeDiff> configDiff(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings) {
     return GenericGetRequest.<NodeDiff>builder()
@@ -268,7 +268,7 @@ public class DeploymentController extends DeploymentsGrpc.DeploymentsImplBase{
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{deploymentName:.+}/version/", method = RequestMethod.PUT)
+  @PutMapping(value = "/{deploymentName:.+}/version/")
   DaemonTask<Halconfig, Void> setVersion(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings,
       @RequestBody Versions.Version version) {
@@ -289,7 +289,7 @@ public class DeploymentController extends DeploymentsGrpc.DeploymentsImplBase{
     return DaemonTaskHandler.submitTask(builder::build, "Edit Spinnaker version");
   }
 
-  @RequestMapping(value = "/{deploymentName:.+}/version/", method = RequestMethod.GET)
+  @GetMapping(value = "/{deploymentName:.+}/version/")
   DaemonTask<Halconfig, String> getVersion(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings) {
     return GenericGetRequest.<String>builder()
@@ -300,7 +300,7 @@ public class DeploymentController extends DeploymentsGrpc.DeploymentsImplBase{
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{deploymentName:.+}/details/{serviceName:.+}/", method = RequestMethod.GET)
+  @GetMapping(value = "/{deploymentName:.+}/details/{serviceName:.+}/")
   DaemonTask<Halconfig, RunningServiceDetails> getServiceDetails(@PathVariable String deploymentName,
       @PathVariable String serviceName,
       @ModelAttribute ValidationSettings validationSettings) {

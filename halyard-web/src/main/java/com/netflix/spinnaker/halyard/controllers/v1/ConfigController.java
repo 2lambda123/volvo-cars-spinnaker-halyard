@@ -26,9 +26,10 @@ import com.netflix.spinnaker.halyard.core.problem.v1.ProblemSet;
 import com.netflix.spinnaker.halyard.core.tasks.v1.DaemonTask;
 import com.netflix.spinnaker.halyard.core.tasks.v1.DaemonTaskHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -41,19 +42,19 @@ public class ConfigController {
   private final ConfigService configService;
   private final HalconfigParser halconfigParser;
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, Halconfig> config() {
     StaticRequestBuilder<Halconfig> builder = new StaticRequestBuilder<>(configService::getConfig);
     return DaemonTaskHandler.submitTask(builder::build, "Get halconfig");
   }
 
-  @RequestMapping(value = "/currentDeployment", method = RequestMethod.GET)
+  @GetMapping(value = "/currentDeployment")
   DaemonTask<Halconfig, String> currentDeployment() {
     StaticRequestBuilder<String> builder = new StaticRequestBuilder<>(configService::getCurrentDeployment);
     return DaemonTaskHandler.submitTask(builder::build, "Get current deployment");
   }
 
-  @RequestMapping(value = "/currentDeployment", method = RequestMethod.PUT)
+  @PutMapping(value = "/currentDeployment")
   DaemonTask<Halconfig, Void> setDeployment(@RequestBody StringBodyRequest name) {
     DaemonResponse.UpdateRequestBuilder builder = new DaemonResponse.UpdateRequestBuilder();
     builder.setUpdate(() -> configService.setCurrentDeployment(name.getValue()));

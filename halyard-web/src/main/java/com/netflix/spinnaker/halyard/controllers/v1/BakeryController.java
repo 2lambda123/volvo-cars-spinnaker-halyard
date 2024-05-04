@@ -41,7 +41,7 @@ public class BakeryController {
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
   private final ObjectMapper objectMapper;
 
-  @RequestMapping(value = "/defaults/", method = RequestMethod.GET)
+  @GetMapping(value = "/defaults/")
   DaemonTask<Halconfig, BakeryDefaults> getBakeryDefaults(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @ModelAttribute ValidationSettings validationSettings) {
@@ -53,7 +53,7 @@ public class BakeryController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/defaults/", method = RequestMethod.PUT)
+  @PutMapping(value = "/defaults/")
   DaemonTask<Halconfig, Void> setBakeryDefaults(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @ModelAttribute ValidationSettings validationSettings,
@@ -71,7 +71,7 @@ public class BakeryController {
         .execute(validationSettings, bakeryDefaults);
   }
 
-  @RequestMapping(value = "/defaults/baseImage/", method = RequestMethod.GET)
+  @GetMapping(value = "/defaults/baseImage/")
   DaemonTask<Halconfig, List<BaseImage>> images(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @ModelAttribute ValidationSettings validationSettings) {
@@ -83,7 +83,7 @@ public class BakeryController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/defaults/baseImage/{baseImageId:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/defaults/baseImage/{baseImageId:.+}")
   DaemonTask<Halconfig, BaseImage> baseImage(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @PathVariable String baseImageId,
@@ -96,7 +96,7 @@ public class BakeryController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/defaults/baseImage/{baseImageId:.+}", method = RequestMethod.DELETE)
+  @DeleteMapping(value = "/defaults/baseImage/{baseImageId:.+}")
   DaemonTask<Halconfig, Void> deleteBaseImage(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @PathVariable String baseImageId,
@@ -110,7 +110,7 @@ public class BakeryController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/defaults/baseImage/{baseImageId:.+}", method = RequestMethod.PUT)
+  @PutMapping(value = "/defaults/baseImage/{baseImageId:.+}")
   DaemonTask<Halconfig, Void> setBaseImage(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @PathVariable String baseImageId,
@@ -129,7 +129,7 @@ public class BakeryController {
         .execute(validationSettings, baseImage);
   }
 
-  @RequestMapping(value = "/defaults/baseImage/", method = RequestMethod.POST)
+  @PostMapping(value = "/defaults/baseImage/")
   DaemonTask<Halconfig, Void> addBaseImage(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @ModelAttribute ValidationSettings validationSettings,

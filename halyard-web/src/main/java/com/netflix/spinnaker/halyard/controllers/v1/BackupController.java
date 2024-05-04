@@ -25,8 +25,8 @@ import com.netflix.spinnaker.halyard.core.StringBodyRequest;
 import com.netflix.spinnaker.halyard.core.tasks.v1.DaemonTask;
 import com.netflix.spinnaker.halyard.core.tasks.v1.DaemonTaskHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,14 +39,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class BackupController {
   private final BackupService backupService;
 
-  @RequestMapping(value = "/create", method = RequestMethod.PUT)
+  @PutMapping(value = "/create")
   DaemonTask<Halconfig, StringBodyRequest> create() {
     StaticRequestBuilder<StringBodyRequest> builder = new StaticRequestBuilder<>(
         () -> new StringBodyRequest(backupService.create()));
     return DaemonTaskHandler.submitTask(builder::build, "Create backup");
   }
 
-  @RequestMapping(value = "/restore", method = RequestMethod.PUT)
+  @PutMapping(value = "/restore")
   DaemonTask<Halconfig, Void> restore(@RequestParam String backupPath) {
     StaticRequestBuilder<Void> builder = new StaticRequestBuilder<>( () -> {
       backupService.restore(backupPath);

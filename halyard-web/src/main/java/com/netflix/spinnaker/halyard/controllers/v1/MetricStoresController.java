@@ -41,7 +41,7 @@ public class MetricStoresController {
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
   private final ObjectMapper objectMapper;
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, MetricStores> getMetricStores(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings) {
     return GenericGetRequest.<MetricStores>builder()
@@ -52,7 +52,7 @@ public class MetricStoresController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{metricStoreType:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/{metricStoreType:.+}")
   DaemonTask<Halconfig, MetricStore> getMetricStore(@PathVariable String deploymentName,
       @PathVariable String metricStoreType,
       @ModelAttribute ValidationSettings validationSettings) {
@@ -64,7 +64,7 @@ public class MetricStoresController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.PUT)
+  @PutMapping(value = "/")
   DaemonTask<Halconfig, Void> setMetricStores(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings,
       @RequestBody MetricStores metricStores) {
@@ -77,7 +77,7 @@ public class MetricStoresController {
         .execute(validationSettings, metricStores);
   }
 
-  @RequestMapping(value = "/{metricStoreType:.+}", method = RequestMethod.PUT)
+  @PutMapping(value = "/{metricStoreType:.+}")
   DaemonTask<Halconfig, Void> setMetricStore(@PathVariable String deploymentName,
       @PathVariable String metricStoreType,
       @ModelAttribute ValidationSettings validationSettings,
@@ -95,7 +95,7 @@ public class MetricStoresController {
         .execute(validationSettings, metricStore);
   }
 
-  @RequestMapping(value = "/{metricStoreType:.+}/enabled/", method = RequestMethod.PUT)
+  @PutMapping(value = "/{metricStoreType:.+}/enabled/")
   DaemonTask<Halconfig, Void> setMethodEnabled(@PathVariable String deploymentName,
       @PathVariable String metricStoreType,
       @ModelAttribute ValidationSettings validationSettings,

@@ -44,7 +44,7 @@ public class SubscriptionController {
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
   private final ObjectMapper objectMapper;
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, List<Subscription>> subscriptions(@PathVariable String deploymentName,
       @PathVariable String pubsubName,
       @ModelAttribute ValidationSettings validationSettings) {
@@ -56,7 +56,7 @@ public class SubscriptionController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/subscription/{subscriptionName:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/subscription/{subscriptionName:.+}")
   DaemonTask<Halconfig, Subscription> subscription(@PathVariable String deploymentName,
       @PathVariable String pubsubName,
       @PathVariable String subscriptionName,
@@ -69,7 +69,7 @@ public class SubscriptionController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/subscription/{subscriptionName:.+}", method = RequestMethod.DELETE)
+  @DeleteMapping(value = "/subscription/{subscriptionName:.+}")
   DaemonTask<Halconfig, Void> deleteSubscription(@PathVariable String deploymentName,
       @PathVariable String pubsubName,
       @PathVariable String subscriptionName,
@@ -83,7 +83,7 @@ public class SubscriptionController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/subscription/{subscriptionName:.+}", method = RequestMethod.PUT)
+  @PutMapping(value = "/subscription/{subscriptionName:.+}")
   DaemonTask<Halconfig, Void> setSubscription(@PathVariable String deploymentName,
       @PathVariable String pubsubName,
       @PathVariable String subscriptionName,
@@ -102,7 +102,7 @@ public class SubscriptionController {
         .execute(validationSettings, subscription);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.POST)
+  @PostMapping(value = "/")
   DaemonTask<Halconfig, Void> addSubscription(@PathVariable String deploymentName,
       @PathVariable String pubsubName,
       @ModelAttribute ValidationSettings validationSettings,

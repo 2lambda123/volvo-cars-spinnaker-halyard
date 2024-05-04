@@ -39,7 +39,7 @@ public class PersistentStorageController {
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
   private final ObjectMapper objectMapper;
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, PersistentStorage> getPersistentStorage(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings) {
     return GenericGetRequest.<PersistentStorage>builder()
@@ -50,7 +50,7 @@ public class PersistentStorageController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.PUT)
+  @PutMapping(value = "/")
   DaemonTask<Halconfig, Void> setPersistentStorage(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings,
       @RequestBody PersistentStorage persistentStorage) {
@@ -63,7 +63,7 @@ public class PersistentStorageController {
         .execute(validationSettings, persistentStorage);
   }
 
-  @RequestMapping(value = "/{persistentStoreType:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/{persistentStoreType:.+}")
   DaemonTask<Halconfig, PersistentStore> getPersistentStore(@PathVariable String deploymentName,
       @PathVariable String persistentStoreType,
       @ModelAttribute ValidationSettings validationSettings) {
@@ -75,7 +75,7 @@ public class PersistentStorageController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{persistentStoreType:.+}", method = RequestMethod.PUT)
+  @PutMapping(value = "/{persistentStoreType:.+}")
   DaemonTask<Halconfig, Void> setPersistentStore(@PathVariable String deploymentName,
       @PathVariable String persistentStoreType,
       @ModelAttribute ValidationSettings validationSettings,

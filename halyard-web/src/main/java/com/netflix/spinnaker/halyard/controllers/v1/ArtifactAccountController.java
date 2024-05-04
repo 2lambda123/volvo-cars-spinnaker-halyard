@@ -44,7 +44,7 @@ public class ArtifactAccountController {
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
   private final ObjectMapper objectMapper;
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, List<ArtifactAccount>> accounts(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @ModelAttribute ValidationSettings validationSettings) {
@@ -56,7 +56,7 @@ public class ArtifactAccountController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/account/{accountName:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/account/{accountName:.+}")
   DaemonTask<Halconfig, ArtifactAccount> account(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @PathVariable String accountName,
@@ -69,7 +69,7 @@ public class ArtifactAccountController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/account/{accountName:.+}", method = RequestMethod.DELETE)
+  @DeleteMapping(value = "/account/{accountName:.+}")
   DaemonTask<Halconfig, Void> deleteArtifactAccount(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @PathVariable String accountName,
@@ -83,7 +83,7 @@ public class ArtifactAccountController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/account/{accountName:.+}", method = RequestMethod.PUT)
+  @PutMapping(value = "/account/{accountName:.+}")
   DaemonTask<Halconfig, Void> setArtifactAccount(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @PathVariable String accountName,
@@ -102,7 +102,7 @@ public class ArtifactAccountController {
         .execute(validationSettings, account);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.POST)
+  @PostMapping(value = "/")
   DaemonTask<Halconfig, Void> addArtifactAccount(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @ModelAttribute ValidationSettings validationSettings,

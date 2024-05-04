@@ -44,7 +44,7 @@ public class PubsubController {
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
   private final ObjectMapper objectMapper;
 
-  @RequestMapping(value = "/{pubsubName:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/{pubsubName:.+}")
   DaemonTask<Halconfig, Pubsub> get(@PathVariable String deploymentName,
       @PathVariable String pubsubName,
       @ModelAttribute ValidationSettings validationSettings) {
@@ -56,7 +56,7 @@ public class PubsubController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{pubsubName:.+}", method = RequestMethod.PUT)
+  @PutMapping(value = "/{pubsubName:.+}")
   DaemonTask<Halconfig, Void> setPubsub(@PathVariable String deploymentName,
       @PathVariable String pubsubName,
       @ModelAttribute ValidationSettings validationSettings,
@@ -74,7 +74,7 @@ public class PubsubController {
         .execute(validationSettings, pubsub);
   }
 
-  @RequestMapping(value = "/{pubsubName:.+}/enabled", method = RequestMethod.PUT)
+  @PutMapping(value = "/{pubsubName:.+}/enabled")
   DaemonTask<Halconfig, Void> setEnabled(@PathVariable String deploymentName,
       @PathVariable String pubsubName,
       @ModelAttribute ValidationSettings validationSettings,
@@ -87,7 +87,7 @@ public class PubsubController {
         .execute(validationSettings, enabled);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, List<Pubsub>> pubsubs(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings) {
     return GenericGetRequest.<List<Pubsub>>builder()

@@ -45,7 +45,7 @@ public class AccountController {
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
   private final ObjectMapper objectMapper;
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, List<Account>> accounts(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @ModelAttribute ValidationSettings validationSettings) {
@@ -57,7 +57,7 @@ public class AccountController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/account/{accountName:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/account/{accountName:.+}")
   DaemonTask<Halconfig, Account> account(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @PathVariable String accountName,
@@ -70,7 +70,7 @@ public class AccountController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/options", method = RequestMethod.POST)
+  @PostMapping(value = "/options")
   DaemonTask<Halconfig, List<String>> newAccountOptions(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @ModelAttribute ValidationSettings validationSettings,
@@ -91,7 +91,7 @@ public class AccountController {
     return DaemonTaskHandler.submitTask(builder::build, "Get " + fieldName + " options");
   }
 
-  @RequestMapping(value = "/account/{accountName:.+}/options", method = RequestMethod.PUT)
+  @PutMapping(value = "/account/{accountName:.+}/options")
   DaemonTask<Halconfig, List<String>> existingAccountOptions(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @PathVariable String accountName,
@@ -107,7 +107,7 @@ public class AccountController {
     return DaemonTaskHandler.submitTask(builder::build, "Get " + fieldName + " options");
   }
 
-  @RequestMapping(value = "/account/{accountName:.+}", method = RequestMethod.DELETE)
+  @DeleteMapping(value = "/account/{accountName:.+}")
   DaemonTask<Halconfig, Void> deleteAccount(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @PathVariable String accountName,
@@ -121,7 +121,7 @@ public class AccountController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/account/{accountName:.+}", method = RequestMethod.PUT)
+  @PutMapping(value = "/account/{accountName:.+}")
   DaemonTask<Halconfig, Void> setAccount(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @PathVariable String accountName,
@@ -140,7 +140,7 @@ public class AccountController {
         .execute(validationSettings, account);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.POST)
+  @PostMapping(value = "/")
   DaemonTask<Halconfig, Void> addAccount(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @ModelAttribute ValidationSettings validationSettings,

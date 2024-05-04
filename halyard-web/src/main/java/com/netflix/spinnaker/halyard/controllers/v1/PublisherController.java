@@ -32,11 +32,14 @@ import com.netflix.spinnaker.halyard.util.v1.GenericGetRequest;
 import com.netflix.spinnaker.halyard.util.v1.GenericUpdateRequest;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -48,7 +51,7 @@ public class PublisherController {
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
   private final ObjectMapper objectMapper;
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, List<Publisher>> publishers(@PathVariable String deploymentName,
       @PathVariable String pubsubName,
       @ModelAttribute ValidationSettings validationSettings) {
@@ -60,7 +63,7 @@ public class PublisherController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/publisher/{publisherName:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/publisher/{publisherName:.+}")
   DaemonTask<Halconfig, Publisher> publisher(@PathVariable String deploymentName,
       @PathVariable String pubsubName,
       @PathVariable String publisherName,
@@ -73,7 +76,7 @@ public class PublisherController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/publisher/{publisherName:.+}", method = RequestMethod.DELETE)
+  @DeleteMapping(value = "/publisher/{publisherName:.+}")
   DaemonTask<Halconfig, Void> deletePublisher(@PathVariable String deploymentName,
       @PathVariable String pubsubName,
       @PathVariable String publisherName,
@@ -87,7 +90,7 @@ public class PublisherController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/publisher/{publisherName:.+}", method = RequestMethod.PUT)
+  @PutMapping(value = "/publisher/{publisherName:.+}")
   DaemonTask<Halconfig, Void> setPublisher(@PathVariable String deploymentName,
       @PathVariable String pubsubName,
       @PathVariable String publisherName,
@@ -106,7 +109,7 @@ public class PublisherController {
         .execute(validationSettings, publisher);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.POST)
+  @PostMapping(value = "/")
   DaemonTask<Halconfig, Void> addPublisher(@PathVariable String deploymentName,
       @PathVariable String pubsubName,
       @ModelAttribute ValidationSettings validationSettings,

@@ -37,7 +37,7 @@ public class WebhookController {
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
   private final HalconfigParser halconfigParser;
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, Webhook> getWebhook(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings) {
     return GenericGetRequest.<Webhook>builder()
@@ -48,7 +48,7 @@ public class WebhookController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.PUT)
+  @PutMapping(value = "/")
   DaemonTask<Halconfig, Void> setWebhook(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings,
       @RequestBody Webhook webhook) {
@@ -61,7 +61,7 @@ public class WebhookController {
         .execute(validationSettings, webhook);
   }
 
-  @RequestMapping(value = "/trust/", method = RequestMethod.GET)
+  @GetMapping(value = "/trust/")
   DaemonTask<Halconfig, WebhookTrust> getWebhookTrust(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings) {
     return GenericGetRequest.<WebhookTrust>builder()
@@ -72,7 +72,7 @@ public class WebhookController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/trust/", method = RequestMethod.PUT)
+  @PutMapping(value = "/trust/")
   DaemonTask<Halconfig, Void> setWebhookTrust(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings,
       @RequestBody WebhookTrust webhookTrust) {

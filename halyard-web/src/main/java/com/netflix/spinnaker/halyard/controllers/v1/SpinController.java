@@ -23,8 +23,8 @@ import com.netflix.spinnaker.halyard.core.tasks.v1.DaemonTask;
 import com.netflix.spinnaker.halyard.core.tasks.v1.DaemonTaskHandler;
 import com.netflix.spinnaker.halyard.deploy.spin.v1.SpinService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SpinController {
   private final SpinService spinService;
 
-  @RequestMapping(value = "/install/latest", method = RequestMethod.GET)
+  @GetMapping(value = "/install/latest")
   DaemonTask<Halconfig, RemoteAction> install() {
     StaticRequestBuilder<RemoteAction> builder = new StaticRequestBuilder<>(spinService::install);
     return DaemonTaskHandler.submitTask(builder::build, "Install latest spin CLI");

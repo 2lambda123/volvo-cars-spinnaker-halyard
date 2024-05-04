@@ -42,7 +42,7 @@ public class ProviderController {
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
   private final ObjectMapper objectMapper;
 
-  @RequestMapping(value = "/{providerName:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/{providerName:.+}")
   DaemonTask<Halconfig, Provider> get(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @ModelAttribute ValidationSettings validationSettings) {
@@ -54,7 +54,7 @@ public class ProviderController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{providerName:.+}", method = RequestMethod.PUT)
+  @PutMapping(value = "/{providerName:.+}")
   DaemonTask<Halconfig, Void> setProvider(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @ModelAttribute ValidationSettings validationSettings,
@@ -72,7 +72,7 @@ public class ProviderController {
         .execute(validationSettings, provider);
   }
 
-  @RequestMapping(value = "/{providerName:.+}/enabled", method = RequestMethod.PUT)
+  @PutMapping(value = "/{providerName:.+}/enabled")
   DaemonTask<Halconfig, Void> setEnabled(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @ModelAttribute ValidationSettings validationSettings,
@@ -85,7 +85,7 @@ public class ProviderController {
         .execute(validationSettings, enabled);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, List<Provider>> providers(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings) {
     return GenericGetRequest.<List<Provider>>builder()

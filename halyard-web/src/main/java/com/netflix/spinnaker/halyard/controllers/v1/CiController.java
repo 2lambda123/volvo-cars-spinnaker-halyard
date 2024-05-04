@@ -37,7 +37,7 @@ public class CiController {
   private final HalconfigParser halconfigParser;
   private final CiService ciService;
 
-  @RequestMapping(value = "/{ciName:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/{ciName:.+}")
   DaemonTask<Halconfig, Ci> ci(@PathVariable String deploymentName,
       @PathVariable String ciName,
       @ModelAttribute ValidationSettings validationSettings) {
@@ -49,7 +49,7 @@ public class CiController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{ciName:.+}/enabled", method = RequestMethod.PUT)
+  @PutMapping(value = "/{ciName:.+}/enabled")
   DaemonTask<Halconfig, Void> setEnabled(@PathVariable String deploymentName,
       @PathVariable String ciName,
       @ModelAttribute ValidationSettings validationSettings,
@@ -62,7 +62,7 @@ public class CiController {
         .execute(validationSettings, enabled);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, List<Ci>> cis(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings) {
     return GenericGetRequest.<List<Ci>>builder()

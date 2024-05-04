@@ -42,7 +42,7 @@ public class NotificationController {
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
   private final ObjectMapper objectMapper;
 
-  @RequestMapping(value = "/{notificationName:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/{notificationName:.+}")
   DaemonTask<Halconfig, Notification> notification(@PathVariable String deploymentName,
       @PathVariable String notificationName,
       @ModelAttribute ValidationSettings validationSettings) {
@@ -54,7 +54,7 @@ public class NotificationController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{notificationName:.+}/enabled", method = RequestMethod.PUT)
+  @PutMapping(value = "/{notificationName:.+}/enabled")
   DaemonTask<Halconfig, Void> setEnabled(@PathVariable String deploymentName,
       @PathVariable String notificationName,
       @ModelAttribute ValidationSettings validationSettings,
@@ -67,7 +67,7 @@ public class NotificationController {
         .execute(validationSettings, enabled);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, Notifications> notifications(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings) {
     return GenericGetRequest.<Notifications>builder()
@@ -78,7 +78,7 @@ public class NotificationController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{notificationName:.+}", method = RequestMethod.PUT)
+  @PutMapping(value = "/{notificationName:.+}")
   DaemonTask<Halconfig, Void> setNotification(@PathVariable String deploymentName,
       @PathVariable String notificationName,
       @ModelAttribute ValidationSettings validationSettings,

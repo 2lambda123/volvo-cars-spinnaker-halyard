@@ -39,7 +39,7 @@ public class ArtifactTemplateController {
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
   private final HalconfigParser halconfigParser;
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, List<ArtifactTemplate>> getArtifactTemplates(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings) {
     return GenericGetRequest.<List<ArtifactTemplate>>builder()
@@ -50,7 +50,7 @@ public class ArtifactTemplateController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{templateName:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/{templateName:.+}")
   DaemonTask<Halconfig, ArtifactTemplate> getArtifactTemplate(@PathVariable String deploymentName,
       @PathVariable String templateName,
       @ModelAttribute ValidationSettings validationSettings) {
@@ -62,7 +62,7 @@ public class ArtifactTemplateController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{templateName:.+}", method = RequestMethod.PUT)
+  @PutMapping(value = "/{templateName:.+}")
   DaemonTask<Halconfig, Void> setArtifactTemplate(@PathVariable String deploymentName,
       @PathVariable String templateName,
       @ModelAttribute ValidationSettings validationSettings,
@@ -76,7 +76,7 @@ public class ArtifactTemplateController {
         .execute(validationSettings, artifactTemplate);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.POST)
+  @PostMapping(value = "/")
   DaemonTask<Halconfig, Void> addArtifactTemplate(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings,
       @RequestBody ArtifactTemplate artifactTemplate) {
@@ -89,7 +89,7 @@ public class ArtifactTemplateController {
         .execute(validationSettings, artifactTemplate);
   }
 
-  @RequestMapping(value = "/{templateName:.+}", method = RequestMethod.DELETE)
+  @DeleteMapping(value = "/{templateName:.+}")
   DaemonTask<Halconfig, Void> deleteArtifactTemplate(@PathVariable String deploymentName,
       @PathVariable String templateName,
       @ModelAttribute ValidationSettings validationSettings) {

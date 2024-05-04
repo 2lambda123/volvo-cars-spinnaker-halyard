@@ -47,7 +47,7 @@ public class ClusterController {
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
   private final ObjectMapper objectMapper;
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, List<Cluster>> clusters(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @ModelAttribute ValidationSettings validationSettings) {
@@ -59,7 +59,7 @@ public class ClusterController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/cluster/{clusterName:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/cluster/{clusterName:.+}")
   DaemonTask<Halconfig, Cluster> cluster(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @PathVariable String clusterName,
@@ -72,7 +72,7 @@ public class ClusterController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/cluster/{clusterName:.+}", method = RequestMethod.DELETE)
+  @DeleteMapping(value = "/cluster/{clusterName:.+}")
   DaemonTask<Halconfig, Void> deleteCluster(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @PathVariable String clusterName,
@@ -86,7 +86,7 @@ public class ClusterController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/cluster/{clusterName:.+}", method = RequestMethod.PUT)
+  @PutMapping(value = "/cluster/{clusterName:.+}")
   DaemonTask<Halconfig, Void> setCluster(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @PathVariable String clusterName,
@@ -105,7 +105,7 @@ public class ClusterController {
         .execute(validationSettings, cluster);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.POST)
+  @PostMapping(value = "/")
   DaemonTask<Halconfig, Void> addCluster(@PathVariable String deploymentName,
       @PathVariable String providerName,
       @ModelAttribute ValidationSettings validationSettings,

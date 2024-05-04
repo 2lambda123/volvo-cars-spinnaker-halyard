@@ -9,18 +9,20 @@ import com.netflix.spinnaker.halyard.core.tasks.v1.TaskRepository;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import retrofit.http.Body;
 
 @GRpcService
 @RestController
 @RequestMapping("/v1/tasks")
 public class TaskController extends OperationsGrpc.OperationsImplBase {
-  @RequestMapping(value = "/{uuid:.+}/", method = RequestMethod.GET)
+  @GetMapping(value = "/{uuid:.+}/")
   DaemonTask<Halconfig, Void> getTask(@PathVariable String uuid) {
     return TaskRepository.getTask(uuid);
   }
 
-  @RequestMapping(value = "/{uuid:.+}/interrupt", method = RequestMethod.PUT)
+  @PutMapping(value = "/{uuid:.+}/interrupt")
   void interruptTask(@PathVariable String uuid, @Body String ignored) {
     DaemonTask task = TaskRepository.getTask(uuid);
 
@@ -31,7 +33,7 @@ public class TaskController extends OperationsGrpc.OperationsImplBase {
     task.interrupt();
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   ShallowTaskList getTasks() {
     return TaskRepository.getTasks();
   }

@@ -43,7 +43,7 @@ public class MasterController {
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
   private final ObjectMapper objectMapper;
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, List<Master>> masters(@PathVariable String deploymentName,
       @PathVariable String ciName,
       @ModelAttribute ValidationSettings validationSettings) {
@@ -55,7 +55,7 @@ public class MasterController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{masterName:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/{masterName:.+}")
   DaemonTask<Halconfig, Master> master(@PathVariable String deploymentName,
       @PathVariable String ciName,
       @PathVariable String masterName,
@@ -68,7 +68,7 @@ public class MasterController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{masterName:.+}", method = RequestMethod.DELETE)
+  @DeleteMapping(value = "/{masterName:.+}")
   DaemonTask<Halconfig, Void> deleteMaster(@PathVariable String deploymentName,
       @PathVariable String ciName,
       @PathVariable String masterName,
@@ -82,7 +82,7 @@ public class MasterController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{masterName:.+}", method = RequestMethod.PUT)
+  @PutMapping(value = "/{masterName:.+}")
   DaemonTask<Halconfig, Void> setMaster(@PathVariable String deploymentName,
       @PathVariable String ciName,
       @PathVariable String masterName,
@@ -101,7 +101,7 @@ public class MasterController {
         .execute(validationSettings, master);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.POST)
+  @PostMapping(value = "/")
   DaemonTask<Halconfig, Void> addMaster(@PathVariable String deploymentName,
       @PathVariable String ciName,
       @ModelAttribute ValidationSettings validationSettings,

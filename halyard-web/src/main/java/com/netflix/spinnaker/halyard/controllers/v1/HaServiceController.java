@@ -44,7 +44,7 @@ public class HaServiceController {
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
   private final ObjectMapper objectMapper;
 
-  @RequestMapping(value = "/{serviceName:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/{serviceName:.+}")
   DaemonTask<Halconfig, HaService> get(@PathVariable String deploymentName,
       @PathVariable String serviceName,
       @ModelAttribute ValidationSettings validationSettings) {
@@ -56,7 +56,7 @@ public class HaServiceController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{serviceName:.+}", method = RequestMethod.PUT)
+  @PutMapping(value = "/{serviceName:.+}")
   DaemonTask<Halconfig, Void> setHaService(@PathVariable String deploymentName,
       @PathVariable String serviceName,
       @ModelAttribute ValidationSettings validationSettings,
@@ -74,7 +74,7 @@ public class HaServiceController {
         .execute(validationSettings, haService);
   }
 
-  @RequestMapping(value = "/{serviceName:.+}/enabled", method = RequestMethod.PUT)
+  @PutMapping(value = "/{serviceName:.+}/enabled")
   DaemonTask<Halconfig, Void> setEnabled(@PathVariable String deploymentName,
       @PathVariable String serviceName,
       @ModelAttribute ValidationSettings validationSettings,
@@ -87,7 +87,7 @@ public class HaServiceController {
         .execute(validationSettings, enabled);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, List<HaService>> haServices(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings) {
     return GenericGetRequest.<List<HaService>>builder()

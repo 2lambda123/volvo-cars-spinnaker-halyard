@@ -32,14 +32,14 @@ import org.springframework.web.bind.annotation.*;
 public class VersionsController {
   private final VersionsService versionsService;
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, Versions> config() {
     DaemonResponse.StaticRequestBuilder<Versions> builder = new DaemonResponse.StaticRequestBuilder<>(
         versionsService::getVersions);
     return DaemonTaskHandler.submitTask(builder::build, "Get released versions");
   }
 
-  @RequestMapping(value = "/latest/", method = RequestMethod.GET)
+  @GetMapping(value = "/latest/")
   DaemonTask<Halconfig, String> latest() {
     DaemonResponse.StaticRequestBuilder<String> builder = new DaemonResponse.StaticRequestBuilder<>(
         versionsService::getLatestSpinnakerVersion);
@@ -56,12 +56,12 @@ public class VersionsController {
    * Please use bomV2 instead.
    */
   @Deprecated
-  @RequestMapping(value = "/bom/{version:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/bom/{version:.+}")
   DaemonTask<Halconfig, BillOfMaterials> bom(@PathVariable String version) {
     return bomV2(version);
   }
 
-  @RequestMapping(value = "/bom", method = RequestMethod.GET)
+  @GetMapping(value = "/bom")
   DaemonTask<Halconfig, BillOfMaterials> bomV2(@RequestParam(value = "version") String version) {
     DaemonResponse.StaticRequestBuilder<BillOfMaterials> builder = new DaemonResponse.StaticRequestBuilder<>(
         () -> versionsService.getBillOfMaterials(version));

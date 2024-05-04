@@ -43,7 +43,7 @@ public class CanaryController {
   private final HalconfigDirectoryStructure halconfigDirectoryStructure;
   private final ObjectMapper objectMapper;
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @GetMapping(value = "/")
   DaemonTask<Halconfig, Canary> getCanary(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings) {
     return GenericGetRequest.<Canary>builder()
@@ -54,7 +54,7 @@ public class CanaryController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.PUT)
+  @PutMapping(value = "/")
   DaemonTask<Halconfig, Void> setCanary(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings,
       @RequestBody Canary canary) {
@@ -67,7 +67,7 @@ public class CanaryController {
         .execute(validationSettings, canary);
   }
 
-  @RequestMapping(value = "/enabled/", method = RequestMethod.PUT)
+  @PutMapping(value = "/enabled/")
   DaemonTask<Halconfig, Void> setEnabled(@PathVariable String deploymentName,
       @ModelAttribute ValidationSettings validationSettings,
       @RequestBody boolean enabled) {
@@ -79,7 +79,7 @@ public class CanaryController {
         .execute(validationSettings, enabled);
   }
 
-  @RequestMapping(value = "/{serviceIntegrationName:.+}/accounts/account/{accountName:.+}", method = RequestMethod.GET)
+  @GetMapping(value = "/{serviceIntegrationName:.+}/accounts/account/{accountName:.+}")
   DaemonTask<Halconfig, AbstractCanaryAccount> getCanaryAccount(@PathVariable String deploymentName,
       @PathVariable String serviceIntegrationName,
       @PathVariable String accountName,
@@ -92,7 +92,7 @@ public class CanaryController {
         .execute(validationSettings);
   }
 
-  @RequestMapping(value = "/{serviceIntegrationName:.+}/accounts/account/{accountName:.+}", method = RequestMethod.PUT)
+  @PutMapping(value = "/{serviceIntegrationName:.+}/accounts/account/{accountName:.+}")
   DaemonTask<Halconfig, Void> setCanaryAccount(@PathVariable String deploymentName,
       @PathVariable String serviceIntegrationName,
       @PathVariable String accountName,
@@ -111,7 +111,7 @@ public class CanaryController {
         .execute(validationSettings, canaryAccount);
   }
 
-  @RequestMapping(value = "/{serviceIntegrationName:.+}/accounts/", method = RequestMethod.POST)
+  @PostMapping(value = "/{serviceIntegrationName:.+}/accounts/")
   DaemonTask<Halconfig, Void> addCanaryAccount(@PathVariable String deploymentName,
       @PathVariable String serviceIntegrationName,
       @ModelAttribute ValidationSettings validationSettings,
@@ -129,7 +129,7 @@ public class CanaryController {
         .execute(validationSettings, canaryAccount);
   }
 
-  @RequestMapping(value = "/{serviceIntegrationName:.+}/accounts/account/{accountName:.+}", method = RequestMethod.DELETE)
+  @DeleteMapping(value = "/{serviceIntegrationName:.+}/accounts/account/{accountName:.+}")
   DaemonTask<Halconfig, Void> deleteCanaryAccount(@PathVariable String deploymentName,
       @PathVariable String serviceIntegrationName,
       @PathVariable String accountName,
